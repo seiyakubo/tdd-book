@@ -4,4 +4,5 @@ namespace I3D;
 
 interface Expression
 {
+    public function reduce(string $to): Money;
 }
