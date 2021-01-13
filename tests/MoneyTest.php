@@ -1,5 +1,7 @@
 <?php
+
 declare(strict_types=1);
+
 namespace I3D;
 
 use PHPUnit\Framework\TestCase;
@@ -13,7 +15,8 @@ class MoneyTest extends TestCase
         $this->assertEquals(Money::dollar(15), $five->times(3));
     }
 
-    public function testEquality() {
+    public function testEquality()
+    {
         $this->assertTrue(Money::dollar(5)->equals(Money::dollar(5)));
         $this->assertFalse(Money::dollar(5)->equals(Money::dollar(6)));
         $this->assertFalse(Money::franc(5)->equals(Money::dollar(5)));
@@ -34,10 +37,14 @@ class MoneyTest extends TestCase
 
     public function testSimpleAddtion()
     {
-        /* Money */ $five = Money::dollar(5);
-        /* Expression */ $sum = $five->plus($five);
-        /* Bank */ $bank = new Bank();
-        /* Money */ $reduced = $bank->reduce($sum, "USD");
+        /* Money */
+        $five = Money::dollar(5);
+        /* Expression */
+        $sum = $five->plus($five);
+        /* Bank */
+        $bank = new Bank();
+        /* Money */
+        $reduced = $bank->reduce($sum, "USD");
         $this->assertEquals(Money::dollar(10), $reduced);
     }
 
@@ -45,7 +52,7 @@ class MoneyTest extends TestCase
     {
         $five = Money::dollar(5);
         $result = $five->plus($five);
-        $sum = $result;
+        /** @var Sum */ $sum = $result;
         $this->assertEquals($five, $sum->augend);
         $this->assertEquals($five, $sum->addend);
     }
@@ -63,5 +70,18 @@ class MoneyTest extends TestCase
         $bank = new Bank();
         $result = $bank->reduce(Money::dollar(1), "USD");
         $this->assertEquals(Money::dollar(1), $result);
+    }
+
+    public function testReduceMoneyDifferentCurrency()
+    {
+        $bank = new Bank();
+        $bank->addRate("CHF", "USD", 2);
+        $result = $bank->reduce(Money::franc(2), "USD");
+        $this->assertEquals(Money::dollar(1), $result);
+    }
+
+    public function testIdentityRate()
+    {
+        $this->assertEquals(1, (new Bank())->rate("USD", "USD"));
     }
 }
