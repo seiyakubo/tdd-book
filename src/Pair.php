@@ -6,13 +6,15 @@ namespace I3D;
 
 class Pair
 {
-    public function __construct(private string $from, private string $to)
-    {
+    public function __construct(
+        private string $from,
+        private string $to,
+    ) {
     }
 
     public function equals(object $object): bool
     {
-        /** @var Pair */
+        /** @var Pair $pair */
         $pair = $object;
         return $this->from === $pair->from && $this->to === $pair->to;
     }

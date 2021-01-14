@@ -6,8 +6,10 @@ namespace I3D;
 
 class Sum implements Expression
 {
-    public function __construct(public Expression $augend, public Expression $addend)
-    {
+    public function __construct(
+        public Expression $augend,
+        public Expression $addend,
+    ) {
     }
 
     public function times(int $multiplier): Expression

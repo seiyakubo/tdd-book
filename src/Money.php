@@ -6,8 +6,10 @@ namespace I3D;
 
 class Money implements Expression
 {
-    public function __construct(public int $amount, protected string $currency)
-    {
+    public function __construct(
+        public int $amount,
+        protected string $currency,
+    ) {
     }
 
     public function times(int $multiplier): Expression
